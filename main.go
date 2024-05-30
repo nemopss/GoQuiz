@@ -15,7 +15,28 @@ func main() {
 		exit(fmt.Sprintf("Failed to open the CSV file: %s\n", *csvFilename))
 	}
 	r := csv.NewReader(file)
-	_ = r
+	lines, err := r.ReadAll()
+	if err != nil {
+		exit("Failed to parse the provided CSV file.\n")
+	}
+	problems := parseLines(lines)
+	fmt.Println(problems)
+}
+
+func parseLines(lines [][]string) []problem {
+	ret := make([]problem, len(lines))
+	for i, line := range lines {
+		ret[i] = problem{
+			question: line[0],
+			answer:   line[1],
+		}
+	}
+	return ret
+}
+
+type problem struct {
+	question string
+	answer   string
 }
 
 func exit(msg string) {

@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -20,6 +21,7 @@ func main() {
 		exit("Failed to parse the provided CSV file.\n")
 	}
 	problems := parseLines(lines)
+
 	correct := 0
 	for i, problem := range problems {
 		fmt.Printf("Problem #%d: %s = \n", i+1, problem.question)
@@ -38,7 +40,7 @@ func parseLines(lines [][]string) []problem {
 	for i, line := range lines {
 		ret[i] = problem{
 			question: line[0],
-			answer:   line[1],
+			answer:   strings.TrimSpace(line[1]),
 		}
 	}
 	return ret
